@@ -1,0 +1,42 @@
+# ===================================================================
+# DEFAULT CONFIGURATION (applies to all profiles)
+# ===================================================================
+server:
+  port: 8080
+
+spring:
+  application:
+    name: todo-app-backend
+
+  # Set the default active profile
+  profiles:
+    active: dev
+  # Import secrets from the .env file
+  config:
+    import: optional:dotenv:.env[.properties]
+
+---
+# ===================================================================
+# DEVELOPMENT PROFILE (dev)
+# ===================================================================
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    mongodb:
+      # For dev, this will be read from your .env file
+      uri: ${DEV_MONGO_URI}
+
+---
+# ===================================================================
+# PRODUCTION PROFILE (prod)
+# ===================================================================
+spring:
+  config:
+    activate:
+      on-profile: prod
+  data:
+    mongodb:
+      # For prod, this will be read from the server's environment variables
+      uri: ${PROD_MONGO_URI}
